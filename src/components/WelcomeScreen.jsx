@@ -20,10 +20,13 @@ export default function WelcomeScreen({ onStart }) {
     <div className="min-h-full relative overflow-hidden">
       <AnimatedBackground />
 
-      <div className="relative z-10 min-h-full flex flex-col items-center justify-center px-8 text-center py-12">
+      <div className="relative z-10 min-h-full flex flex-col items-center justify-between px-8 text-center py-10">
+        {/* 顶部占位 */}
+        <div className="h-4" />
+
         {/* AI 洞察之眼 */}
         <motion.div
-          className="mb-6"
+          className="mb-4"
           initial={{ scale: 0, rotate: -20 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.1 }}
@@ -55,7 +58,7 @@ export default function WelcomeScreen({ onStart }) {
 
         {/* 描述 */}
         <motion.p
-          className="text-sm text-slate-500 leading-relaxed max-w-[260px] mb-8"
+          className="text-sm text-slate-500 leading-relaxed max-w-[260px]"
           initial={{ opacity: 0, y: 15 }}
           animate={subtitleVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
@@ -78,7 +81,7 @@ export default function WelcomeScreen({ onStart }) {
 
         {/* 底部品牌 */}
         <motion.p
-          className="absolute bottom-4 text-[10px] text-slate-300 tracking-wider"
+          className="text-[10px] text-slate-300 tracking-wider pb-2"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}
