@@ -20,17 +20,16 @@ export default function WelcomeScreen({ onStart }) {
     <div className="min-h-screen relative overflow-hidden">
       <AnimatedBackground />
 
-      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-8 text-center">
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 sm:px-12 text-center">
         {/* AI 洞察之眼 */}
         <motion.div
-          className="mb-6"
+          className="mb-10"
           initial={{ scale: 0, rotate: -20 }}
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', damping: 12, stiffness: 200, delay: 0.1 }}
         >
           <div className="relative flex items-center justify-center">
-            {/* 外发光基座 */}
-            <div className="absolute w-28 h-28 rounded-full bg-hermes-200/15 blur-xl" />
+            <div className="absolute w-36 h-36 rounded-full bg-hermes-200/15 blur-xl" />
             <InsightOrb state="dormant" size="lg" />
           </div>
         </motion.div>
@@ -41,21 +40,21 @@ export default function WelcomeScreen({ onStart }) {
           animate={titleVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-2xl font-bold text-slate-800 font-serif tracking-wide mb-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 font-serif tracking-wide mb-2">
             AI 天赋测评
           </h1>
-          <div className="flex items-center justify-center gap-1.5 mb-1">
-            <Sparkles className="w-3.5 h-3.5 text-hermes-500" />
-            <span className="text-xs font-medium text-hermes-500 tracking-widest">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Sparkles className="w-4 h-4 text-hermes-500" />
+            <span className="text-sm font-medium text-hermes-500 tracking-widest">
               AI-POWERED TALENT INSIGHT
             </span>
-            <Sparkles className="w-3.5 h-3.5 text-hermes-500" />
+            <Sparkles className="w-4 h-4 text-hermes-500" />
           </div>
         </motion.div>
 
         {/* 描述 */}
         <motion.p
-          className="text-sm text-slate-500 leading-relaxed max-w-[260px] mb-8"
+          className="text-base sm:text-lg text-slate-500 leading-relaxed max-w-lg mb-10"
           initial={{ opacity: 0, y: 15 }}
           animate={subtitleVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
@@ -66,19 +65,19 @@ export default function WelcomeScreen({ onStart }) {
         {/* CTA 按钮 */}
         <motion.button
           onClick={onStart}
-          className="px-8 py-3.5 bg-gradient-to-r from-hermes-500 to-hermes-600 text-white rounded-3xl font-semibold text-sm shadow-lg shadow-hermes-300/30 hover:shadow-xl hover:shadow-hermes-300/40 hover:-translate-y-0.5 active:scale-[0.98] transition-btn flex items-center gap-2"
+          className="px-10 py-4 bg-gradient-to-r from-hermes-500 to-hermes-600 text-white rounded-3xl font-semibold text-base shadow-lg shadow-hermes-300/30 hover:shadow-xl hover:shadow-hermes-300/40 hover:-translate-y-0.5 active:scale-[0.98] transition-btn flex items-center gap-2.5"
           initial={{ opacity: 0, y: 20 }}
           animate={btnVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, type: 'spring' }}
           whileTap={{ scale: 0.98 }}
         >
-          <Sparkles className="w-4 h-4" />
+          <Sparkles className="w-5 h-5" />
           开始 AI 测评
         </motion.button>
 
         {/* 底部品牌 */}
         <motion.p
-          className="mt-8 text-[10px] text-slate-300 tracking-wider"
+          className="mt-12 text-xs text-slate-300 tracking-wider"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 2 }}

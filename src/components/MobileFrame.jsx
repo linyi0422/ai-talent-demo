@@ -5,7 +5,7 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
 
   return (
     <div className="h-screen flex bg-[#1e1e1e] overflow-hidden">
-      {/* ===== 左侧：全屏内容预览区 ===== */}
+      {/* ===== 左侧：内容预览区 ===== */}
       <div className="flex-1 relative bg-slate-50">
         {/* 顶部工具栏 */}
         <div className="absolute top-0 left-0 right-0 h-9 bg-[#3c3c3c] flex items-center px-4 z-50">
@@ -18,29 +18,26 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
             <span className="text-[11px] text-[#999] font-mono">AI 天赋测评 — 预览</span>
           </div>
           <div className="flex items-center gap-3 text-[10px] text-[#666] font-mono">
-            <span>390 × 844</span>
-            <span>DPR 3</span>
+            <span>Responsive</span>
           </div>
         </div>
 
-        {/* 内容区 — 手机宽度居中展示 */}
+        {/* 内容区 — 全宽自然流 */}
         <div
           ref={scrollRef}
-          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth flex justify-center"
+          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth"
           style={{
             WebkitOverflowScrolling: 'touch',
             msOverflowStyle: 'none',
             scrollbarWidth: 'none',
           }}
         >
-          <div className="w-full max-w-[430px] min-h-full">
-            {children}
-          </div>
+          {children}
         </div>
       </div>
 
       {/* ===== 右侧：调试信息面板（桌面端可见） ===== */}
-      <div className="hidden md:flex w-72 xl:w-80 bg-[#252526] border-l border-[#3c3c3c] flex-col">
+      <div className="hidden lg:flex w-72 xl:w-80 bg-[#252526] border-l border-[#3c3c3c] flex-col">
         {/* 面板头部 */}
         <div className="h-9 bg-[#3c3c3c] flex items-center px-3 border-b border-[#4a4a4a] shrink-0">
           <div className="flex items-center gap-1.5">
@@ -76,19 +73,15 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
 
         {/* 视口信息 */}
         <div className="px-4 py-3 border-b border-[#3c3c3c]">
-          <div className="text-[10px] text-[#888] font-mono uppercase tracking-wider mb-2">Viewport</div>
+          <div className="text-[10px] text-[#888] font-mono uppercase tracking-wider mb-2">Layout</div>
           <div className="space-y-1.5 text-[11px] text-[#999] font-mono">
             <div className="flex justify-between">
               <span>Mode</span>
-              <span className="text-[#ff8a00]">Full Screen</span>
+              <span className="text-[#ff8a00]">Web Responsive</span>
             </div>
             <div className="flex justify-between">
-              <span>Scroll</span>
-              <span className="text-[#bbb]">Native</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Safe Area</span>
-              <span className="text-[#bbb]">Auto</span>
+              <span>Max Width</span>
+              <span className="text-[#bbb]">672px</span>
             </div>
           </div>
         </div>
@@ -119,10 +112,6 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
             <div className="flex justify-between">
               <span>Design</span>
               <span className="text-[#ff8a00]">Hermès Orange</span>
-            </div>
-            <div className="flex justify-between">
-              <span>Platform</span>
-              <span>Mobile First</span>
             </div>
             <div className="flex justify-between">
               <span>Flow</span>
