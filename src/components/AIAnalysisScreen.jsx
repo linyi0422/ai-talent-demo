@@ -42,14 +42,12 @@ export default function AIAnalysisScreen({ highMoments, onDone }) {
   }, [currentStep, onDone])
 
   return (
-    <div className="min-h-full flex flex-col bg-gradient-to-b from-cream to-cream-50 relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-cream to-cream-50 relative overflow-hidden">
       {/* 背景装饰 */}
       <div className="absolute top-1/4 -left-20 w-40 h-40 bg-hermes-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 -right-16 w-32 h-32 bg-hermes-300/15 rounded-full blur-3xl" />
 
-      <div className="relative z-10 flex-1 flex flex-col items-center justify-between px-8 py-10">
-        {/* 顶部占位 */}
-        <div className="h-4" />
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center px-8 py-12">
         {/* AI 洞察之眼 — 激活态 */}
         <motion.div
           className="mb-8"
@@ -75,7 +73,7 @@ export default function AIAnalysisScreen({ highMoments, onDone }) {
         </motion.div>
 
         {/* 管线步骤 */}
-        <div className="w-full max-w-[280px] space-y-3 flex-1 flex flex-col justify-center">
+        <div className="w-full max-w-[280px] space-y-3">
           {PIPELINE.map((step, i) => {
             const isActive = currentStep === i
             const isDone = completedSteps.includes(i)
@@ -151,9 +149,6 @@ export default function AIAnalysisScreen({ highMoments, onDone }) {
             )
           })}
         </div>
-
-        {/* 底部占位 */}
-        <div className="h-4" />
 
         {/* 完成动画 */}
         <AnimatePresence>

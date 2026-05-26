@@ -89,7 +89,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
     .slice(0, 3)
 
   return (
-    <div className="min-h-full flex flex-col relative">
+    <div className="min-h-screen flex flex-col relative">
       <AnimatedBackground />
 
       {/* 内容区 */}

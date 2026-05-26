@@ -94,7 +94,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
   }
 
   return (
-    <div className="min-h-full flex flex-col bg-cream">
+    <div className="min-h-screen flex flex-col bg-cream">
       {/* 顶部导航 */}
       <div className="flex items-center justify-between px-5 pt-3 pb-2 shrink-0">
         <button

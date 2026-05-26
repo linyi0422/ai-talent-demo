@@ -1,15 +1,14 @@
 import { useRef } from 'react'
-import StatusBar from './StatusBar'
 
 export default function MobileFrame({ children, currentPhase = 'welcome' }) {
   const scrollRef = useRef(null)
 
   return (
     <div className="h-screen flex bg-[#1e1e1e] overflow-hidden">
-      {/* ===== 左侧：手机预览区（模拟微信开发者工具） ===== */}
-      <div className="flex-1 flex items-center justify-center bg-[#2c2c2c] relative">
+      {/* ===== 左侧：全屏内容预览区 ===== */}
+      <div className="flex-1 relative bg-slate-50">
         {/* 顶部工具栏 */}
-        <div className="absolute top-0 left-0 right-0 h-9 bg-[#3c3c3c] flex items-center px-4 z-10 border-b border-[#4a4a4a]">
+        <div className="absolute top-0 left-0 right-0 h-9 bg-[#3c3c3c] flex items-center px-4 z-50">
           <div className="flex items-center gap-2">
             <div className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
             <div className="w-2.5 h-2.5 rounded-full bg-[#febc2e]" />
@@ -18,47 +17,23 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
           <div className="flex-1 text-center">
             <span className="text-[11px] text-[#999] font-mono">AI 天赋测评 — 预览</span>
           </div>
-          <div className="w-16" />
+          <div className="flex items-center gap-3 text-[10px] text-[#666] font-mono">
+            <span>390 × 844</span>
+            <span>DPR 3</span>
+          </div>
         </div>
 
-        {/* 手机外壳 — 填满可用高度 */}
-        <div className="relative mt-10 mb-6 mx-auto w-full max-w-[393px] h-[calc(100vh-80px)] bg-[#1a1a1a] rounded-[48px] p-[8px] shadow-[0_0_0_1.5px_#333,0_0_0_3px_#1a1a1a,0_25px_70px_rgba(0,0,0,0.6)]">
-          {/* 侧边按钮 */}
-          <div className="absolute -left-[3px] top-[18%] w-[3px] h-7 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -left-[3px] top-[25%] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -left-[3px] top-[33%] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -right-[3px] top-[25%] w-[3px] h-14 bg-[#2a2a2a] rounded-r-sm" />
-
-          {/* 屏幕区域 — 真正的内容容器 */}
-          <div className="w-full h-full bg-[#EDDDAF] rounded-[42px] overflow-hidden relative">
-            {/* 灵动岛 — absolute 覆盖，不占内容空间 */}
-            <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[120px] h-[32px] bg-[#0a0a0a] rounded-[16px] z-50" />
-
-            {/* 状态栏 — absolute 覆盖 */}
-            <div className="absolute top-0 left-0 right-0 z-40">
-              <StatusBar />
-            </div>
-
-            {/* 滚动内容区 — 从状态栏下方开始 */}
-            <div
-              ref={scrollRef}
-              className="h-full overflow-y-auto overflow-x-hidden scroll-smooth"
-              style={{
-                WebkitOverflowScrolling: 'touch',
-                msOverflowStyle: 'none',
-                scrollbarWidth: 'none',
-              }}
-            >
-              {/* 顶部安全区占位 */}
-              <div className="h-12" />
-              {children}
-              {/* 底部安全区占位 */}
-              <div className="h-8" />
-            </div>
-
-            {/* Home 指示条 */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-[#333] rounded-full z-30 opacity-50" />
-          </div>
+        {/* 内容区 — 直接全屏渲染 */}
+        <div
+          ref={scrollRef}
+          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth"
+          style={{
+            WebkitOverflowScrolling: 'touch',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+          }}
+        >
+          {children}
         </div>
       </div>
 
@@ -94,6 +69,25 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
                 </div>
               )
             })}
+          </div>
+        </div>
+
+        {/* 视口信息 */}
+        <div className="px-4 py-3 border-b border-[#3c3c3c]">
+          <div className="text-[10px] text-[#888] font-mono uppercase tracking-wider mb-2">Viewport</div>
+          <div className="space-y-1.5 text-[11px] text-[#999] font-mono">
+            <div className="flex justify-between">
+              <span>Mode</span>
+              <span className="text-[#ff8a00]">Full Screen</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Scroll</span>
+              <span className="text-[#bbb]">Native</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Safe Area</span>
+              <span className="text-[#bbb]">Auto</span>
+            </div>
           </div>
         </div>
 
