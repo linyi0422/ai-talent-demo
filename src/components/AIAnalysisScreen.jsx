@@ -42,7 +42,7 @@ export default function AIAnalysisScreen({ highMoments, onDone }) {
   }, [currentStep, onDone])
 
   return (
-    <div className="h-full flex flex-col bg-gradient-to-b from-cream to-cream-50 relative overflow-hidden">
+    <div className="min-h-full flex flex-col bg-gradient-to-b from-cream to-cream-50 relative overflow-hidden">
       {/* 背景装饰 */}
       <div className="absolute top-1/4 -left-20 w-40 h-40 bg-hermes-200/20 rounded-full blur-3xl" />
       <div className="absolute bottom-1/3 -right-16 w-32 h-32 bg-hermes-300/15 rounded-full blur-3xl" />

@@ -5,7 +5,7 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
   const scrollRef = useRef(null)
 
   return (
-    <div className="min-h-screen flex bg-[#1e1e1e]">
+    <div className="h-screen flex bg-[#1e1e1e] overflow-hidden">
       {/* ===== 左侧：手机预览区（模拟微信开发者工具） ===== */}
       <div className="flex-1 flex items-center justify-center bg-[#2c2c2c] relative">
         {/* 顶部工具栏 */}
@@ -21,50 +21,44 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
           <div className="w-16" />
         </div>
 
-        {/* 手机外壳 — iPhone 15 Pro 风格 */}
-        <div className="relative w-full max-w-[390px] aspect-[390/844] max-h-[82vh] bg-[#1a1a1a] rounded-[48px] p-[9px] shadow-[0_0_0_1.5px_#333,0_0_0_3px_#1a1a1a,0_25px_70px_rgba(0,0,0,0.6)] mt-6">
+        {/* 手机外壳 — 填满可用高度 */}
+        <div className="relative mt-10 mb-6 mx-auto w-full max-w-[393px] h-[calc(100vh-80px)] bg-[#1a1a1a] rounded-[48px] p-[8px] shadow-[0_0_0_1.5px_#333,0_0_0_3px_#1a1a1a,0_25px_70px_rgba(0,0,0,0.6)]">
           {/* 侧边按钮 */}
-          <div className="absolute -left-[3px] top-[140px] w-[3px] h-7 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -left-[3px] top-[190px] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -left-[3px] top-[255px] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
-          <div className="absolute -right-[3px] top-[195px] w-[3px] h-14 bg-[#2a2a2a] rounded-r-sm" />
+          <div className="absolute -left-[3px] top-[18%] w-[3px] h-7 bg-[#2a2a2a] rounded-l-sm" />
+          <div className="absolute -left-[3px] top-[25%] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
+          <div className="absolute -left-[3px] top-[33%] w-[3px] h-12 bg-[#2a2a2a] rounded-l-sm" />
+          <div className="absolute -right-[3px] top-[25%] w-[3px] h-14 bg-[#2a2a2a] rounded-r-sm" />
 
-          {/* 屏幕圆角外壳 */}
-          <div className="w-full h-full bg-[#1a1a1a] rounded-[40px] overflow-hidden relative">
-            {/* 灵动岛 */}
-            <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[124px] h-[34px] bg-[#0a0a0a] rounded-[20px] z-50 shadow-inner" />
+          {/* 屏幕区域 — 真正的内容容器 */}
+          <div className="w-full h-full bg-[#EDDDAF] rounded-[42px] overflow-hidden relative">
+            {/* 灵动岛 — absolute 覆盖，不占内容空间 */}
+            <div className="absolute top-[6px] left-1/2 -translate-x-1/2 w-[120px] h-[32px] bg-[#0a0a0a] rounded-[16px] z-50" />
 
-            {/* 屏幕内容区 */}
-            <div className="w-full h-full bg-[#EDDDAF] rounded-[40px] overflow-hidden relative">
-              {/* 状态栏 */}
+            {/* 状态栏 — absolute 覆盖 */}
+            <div className="absolute top-0 left-0 right-0 z-40">
               <StatusBar />
-
-              {/* 滚动内容区 */}
-              <div
-                ref={scrollRef}
-                className="h-full overflow-y-auto overflow-x-hidden pt-12 pb-6 scroll-smooth"
-                style={{
-                  WebkitOverflowScrolling: 'touch',
-                  msOverflowStyle: 'none',
-                  scrollbarWidth: 'none',
-                }}
-              >
-                {children}
-              </div>
-
-              {/* Home 指示条 */}
-              <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-[#333] rounded-full z-30 opacity-60" />
             </div>
-          </div>
-        </div>
 
-        {/* 底部设备信息 */}
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-3 text-[10px] text-[#666] font-mono">
-          <span>iPhone 15 Pro</span>
-          <span className="text-[#444]">|</span>
-          <span>390 × 844</span>
-          <span className="text-[#444]">|</span>
-          <span>DPR 3</span>
+            {/* 滚动内容区 — 从状态栏下方开始 */}
+            <div
+              ref={scrollRef}
+              className="h-full overflow-y-auto overflow-x-hidden scroll-smooth"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
+              }}
+            >
+              {/* 顶部安全区占位 */}
+              <div className="h-12" />
+              {children}
+              {/* 底部安全区占位 */}
+              <div className="h-8" />
+            </div>
+
+            {/* Home 指示条 */}
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-[134px] h-[5px] bg-[#333] rounded-full z-30 opacity-50" />
+          </div>
         </div>
       </div>
 
@@ -87,9 +81,8 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
             {['welcome', 'onboard', 'analysis', 'report'].map((p, i) => {
               const phaseOrder = ['welcome', 'onboard', 'analysis', 'report']
               const currentIndex = phaseOrder.indexOf(currentPhase)
-              const thisIndex = i
               const isActive = p === currentPhase
-              const isDone = thisIndex < currentIndex
+              const isDone = i < currentIndex
               return (
                 <div key={p} className="flex-1 flex flex-col items-center gap-1">
                   <div className={`w-full h-1 rounded-full transition-all duration-500 ${
@@ -136,8 +129,8 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
               <span>Mobile First</span>
             </div>
             <div className="flex justify-between">
-              <span>Viewport</span>
-              <span>390 × 844</span>
+              <span>Flow</span>
+              <span className="text-[#bbb]">4 Phases</span>
             </div>
           </div>
         </div>
@@ -145,10 +138,10 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
         {/* 操作提示 */}
         <div className="flex-1 px-4 py-3">
           <div className="text-[10px] text-[#888] font-mono uppercase tracking-wider mb-2">Controls</div>
-          <div className="space-y-1 text-[10px] text-[#666] font-mono">
+          <div className="space-y-1.5 text-[10px] text-[#666] font-mono">
             <div>📱 Scroll to navigate</div>
             <div>👆 Tap cards to expand</div>
-            <div>🔄 Flow: Welcome → Onboard → Analysis → Report</div>
+            <div>🔄 Welcome → Onboard → Analysis → Report</div>
           </div>
         </div>
 
