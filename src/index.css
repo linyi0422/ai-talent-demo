@@ -1,0 +1,213 @@
+@import "tailwindcss";
+
+@theme {
+  /* === 爱马仕橙主色系 === */
+  --color-hermes-50: #fff8f0;
+  --color-hermes-100: #ffeedb;
+  --color-hermes-200: #ffdbaf;
+  --color-hermes-300: #ffb873;
+  --color-hermes-400: #ffa133;
+  --color-hermes-500: #ff8a00;
+  --color-hermes-600: #e07b00;
+  --color-hermes-700: #b35f00;
+  --color-hermes-800: #804300;
+  --color-hermes-900: #4d2800;
+
+  /* === 爱马仕经典配色 === */
+  --color-cream: #eddaf;
+  --color-cream-light: #f5efd8;
+  --color-cream-dark: #d4c8a0;
+
+  /* === 幽谷灰系 === */
+  --color-slate-50: #f0ede4;
+  --color-slate-100: #e3dfd4;
+  --color-slate-200: #c5bfb0;
+  --color-slate-300: #a39b8a;
+  --color-slate-400: #7d7566;
+  --color-slate-500: #5c564c;
+  --color-slate-600: #484338;
+  --color-slate-700: #36322b;
+  --color-slate-800: #2b313f;
+  --color-slate-900: #1a1d24;
+
+  /* === 辅助色（保持语义但不抢眼） === */
+  --color-green-50: #f0fdf4;
+  --color-green-100: #dcfce7;
+  --color-green-500: #22c55e;
+  --color-green-600: #16a34a;
+  --color-green-700: #15803d;
+
+  --color-rose-50: #fff1f2;
+  --color-rose-500: #f43f5e;
+
+  --color-gold-50: #fffbea;
+  --color-gold-100: #fef3c7;
+  --color-gold-400: #eab308;
+  --color-gold-500: #ca8a04;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  background: #eddaf;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* === 卡片阴影 — 3 级柔光阴影体系 === */
+/* 静置态：可见但不突兀的底层阴影 */
+.card-shadow {
+  box-shadow:
+    0 1px 3px rgba(43, 49, 63, 0.04),
+    0 4px 16px rgba(43, 49, 63, 0.06),
+    0 8px 28px rgba(43, 49, 63, 0.03);
+}
+
+/* 悬浮态：hover 时的抬升效果 */
+.card-elevated {
+  box-shadow:
+    0 2px 6px rgba(43, 49, 63, 0.06),
+    0 8px 24px rgba(43, 49, 63, 0.08),
+    0 16px 40px rgba(43, 49, 63, 0.04);
+}
+
+/* 浮动态：modal/dialog 的最高层级 */
+.card-floating {
+  box-shadow:
+    0 4px 12px rgba(43, 49, 63, 0.08),
+    0 12px 36px rgba(43, 49, 63, 0.1),
+    0 24px 56px rgba(43, 49, 63, 0.06);
+}
+
+/* === 玻璃拟态（增强版） === */
+.glass-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 138, 0, 0.08);
+  box-shadow:
+    0 2px 8px rgba(43, 49, 63, 0.04),
+    0 4px 16px rgba(43, 49, 63, 0.04);
+}
+
+.glass-card:hover {
+  box-shadow:
+    0 2px 8px rgba(43, 49, 63, 0.06),
+    0 8px 28px rgba(43, 49, 63, 0.06);
+  border-color: rgba(255, 138, 0, 0.14);
+}
+
+/* === 过渡标准化 === */
+.transition-card {
+  transition:
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 300ms ease;
+}
+
+.transition-btn {
+  transition:
+    all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-input {
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+/* === 动画关键帧 === */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes blob-move {
+  0% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(30px, -50px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.9); }
+  100% { transform: translate(0px, 0px) scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+@keyframes pixel-bounce {
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+  50% { transform: translateY(0); }
+  70% { transform: translateY(-2px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-blob {
+  animation: blob-move 8s ease-in-out infinite;
+}
+
+.animate-pulse-ring::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 138, 0, 0.4);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.animate-pixel {
+  animation: pixel-bounce 2s ease-in-out infinite;
+}
+
+/* === 滚动条 === */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 138, 0, 0.25);
+  border-radius: 2px;
+}
+
+/* === 数字递增动画 === */
+@keyframes count-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-count {
+  animation: count-up 0.6s ease-out forwards;
+}
+
+/* === 爱马仕经典分隔线 === */
+.hermes-divider {
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 138, 0, 0.2), transparent);
+}
+
+/* === 像素风描边 === */
+.pixel-border {
+  box-shadow:
+    0 0 0 2px #2b313f,
+    0 0 0 4px #ff8a00,
+    0 0 0 6px #2b313f;
+}
