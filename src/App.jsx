@@ -60,7 +60,7 @@ export default function App() {
   }, [transitionTo])
 
   return (
-    <MobileFrame>
+    <MobileFrame currentPhase={phase}>
       {/* Phase 0: Welcome */}
       {phase === 'welcome' && (
         <WelcomeScreen onStart={() => transitionTo('onboard')} />
