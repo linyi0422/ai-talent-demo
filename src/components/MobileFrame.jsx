@@ -23,17 +23,19 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
           </div>
         </div>
 
-        {/* 内容区 — 直接全屏渲染 */}
+        {/* 内容区 — 手机宽度居中展示 */}
         <div
           ref={scrollRef}
-          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth"
+          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth flex justify-center"
           style={{
             WebkitOverflowScrolling: 'touch',
             msOverflowStyle: 'none',
             scrollbarWidth: 'none',
           }}
         >
-          {children}
+          <div className="w-full max-w-[430px] min-h-full">
+            {children}
+          </div>
         </div>
       </div>
 
