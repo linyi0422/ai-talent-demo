@@ -41,12 +41,12 @@ export default function WelcomeScreen({ onStart, onQuickDemo }) {
           transition={{ duration: 0.6 }}
         >
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 font-serif tracking-wide mb-2">
-            AI 天赋测评
+            AI 职业连接助手
           </h1>
           <div className="flex items-center justify-center gap-2 mb-2">
             <Sparkles className="w-4 h-4 text-hermes-500" />
             <span className="text-sm font-medium text-hermes-500 tracking-widest">
-              AI-POWERED TALENT INSIGHT
+              AI-POWERED CAREER CONNECTION
             </span>
             <Sparkles className="w-4 h-4 text-hermes-500" />
           </div>
@@ -59,7 +59,7 @@ export default function WelcomeScreen({ onStart, onQuickDemo }) {
           animate={subtitleVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
         >
-          回答 3 个问题，AI 将为你生成专属天赋图谱、名人匹配与职业推荐
+          用 3 段高光经历，连接你的天赋信号、岗位机会、简历表达与面试故事
         </motion.p>
 
         {/* CTA 按钮 */}
@@ -75,7 +75,7 @@ export default function WelcomeScreen({ onStart, onQuickDemo }) {
             whileTap={{ scale: 0.98 }}
           >
             <Sparkles className="w-5 h-5" />
-            开始 AI 测评
+            开始职业连接
           </motion.button>
           <motion.button
             onClick={onQuickDemo}

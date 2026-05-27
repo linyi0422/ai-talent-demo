@@ -19,7 +19,7 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
             <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
           </div>
           <div className="flex-1 text-center">
-            <span className="text-[11px] text-[#bbb] font-mono">AI 天赋测评 — Demo</span>
+            <span className="text-[11px] text-[#bbb] font-mono">AI 职业连接助手 — Demo</span>
           </div>
           <div className="flex items-center gap-3 text-[10px] text-[#666] font-mono">
             <span>Presenter</span>
