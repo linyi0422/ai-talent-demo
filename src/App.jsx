@@ -6,7 +6,7 @@ import AIChatOnboarding from './components/AIChatOnboarding'
 import AIAnalysisScreen from './components/AIAnalysisScreen'
 import ReportDashboard from './components/ReportDashboard'
 import TalentDetailPage from './pages/TalentDetailPage'
-import PhaseTransition from './components/PhaseTransition'
+import { demoHighMoments } from './data/demoValues'
 
 // Phase state machine: welcome → onboard → analysis → report
 export default function App() {
@@ -14,26 +14,8 @@ export default function App() {
   const [highMoments, setHighMoments] = useState([])
   const [selectedTalent, setSelectedTalent] = useState(null)
 
-  // Transition state
-  const [pendingPhase, setPendingPhase] = useState(null)
-  const [isTransitioning, setIsTransitioning] = useState(false)
-
-  // 统一的阶段切换 —— 通过 PhaseTransition 动画过渡
   const transitionTo = useCallback((targetPhase) => {
-    if (isTransitioning) return
-    setPendingPhase(targetPhase)
-    setIsTransitioning(true)
-  }, [isTransitioning])
-
-  const handleTransitionMidpoint = useCallback(() => {
-    if (pendingPhase) {
-      setPhase(pendingPhase)
-    }
-  }, [pendingPhase])
-
-  const handleTransitionComplete = useCallback(() => {
-    setIsTransitioning(false)
-    setPendingPhase(null)
+    setPhase(targetPhase)
   }, [])
 
   const handleTalentSelect = useCallback((key) => {
@@ -46,6 +28,11 @@ export default function App() {
 
   const handleSaveHighMoments = useCallback((moments) => {
     setHighMoments(moments)
+    transitionTo('analysis')
+  }, [transitionTo])
+
+  const handleQuickDemo = useCallback(() => {
+    setHighMoments([...demoHighMoments])
     transitionTo('analysis')
   }, [transitionTo])
 
@@ -63,7 +50,10 @@ export default function App() {
     <MobileFrame currentPhase={phase}>
       {/* Phase 0: Welcome */}
       {phase === 'welcome' && (
-        <WelcomeScreen onStart={() => transitionTo('onboard')} />
+        <WelcomeScreen
+          onStart={() => transitionTo('onboard')}
+          onQuickDemo={handleQuickDemo}
+        />
       )}
 
       {/* Phase 1: AI Chat Onboarding */}
@@ -108,13 +98,6 @@ export default function App() {
           </BottomSheet>
         </>
       )}
-
-      {/* Phase Transition Overlay */}
-      <PhaseTransition
-        isActive={isTransitioning}
-        onMidpoint={handleTransitionMidpoint}
-        onComplete={handleTransitionComplete}
-      />
     </MobileFrame>
   )
 }

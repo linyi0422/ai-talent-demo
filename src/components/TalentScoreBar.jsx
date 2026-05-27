@@ -6,7 +6,10 @@ import { mockUser, talentDimensions } from '../data/mockUser'
 function useCountUp(target, duration = 1200, startCounting = false) {
   const [count, setCount] = useState(0)
   useEffect(() => {
-    if (!startCounting) { setCount(0); return }
+    if (!startCounting) {
+      const resetTimer = setTimeout(() => setCount(0), 0)
+      return () => clearTimeout(resetTimer)
+    }
     const startTime = Date.now()
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime
@@ -122,13 +125,14 @@ export default function TalentScoreBarList({ selectedDim, onSelectDim, onTalentS
 
   useEffect(() => {
     if (selectedDim) {
-      setExpandedKey(selectedDim)
-      setTimeout(() => {
+      const focusTimer = setTimeout(() => {
+        setExpandedKey(selectedDim)
         document.getElementById(`talent-bar-${selectedDim}`)?.scrollIntoView({
           behavior: 'smooth',
           block: 'center',
         })
       }, 100)
+      return () => clearTimeout(focusTimer)
     }
   }, [selectedDim])
 

@@ -17,23 +17,21 @@ import { motion, AnimatePresence } from 'framer-motion'
  *   isActive     — 是否触发过渡
  *   onMidpoint   — 在中点调用的回调（用于实际切换 phase）
  *   onComplete   — 动画完全结束后的回调
- *   direction    — 'forward' | 'backward'（预留，目前统一处理）
  */
 
 export default function PhaseTransition({
   isActive,
   onMidpoint,
   onComplete,
-  direction = 'forward',
 }) {
   const [phase, setPhase] = useState('idle') // idle | expanding | contracted | fading
   const midpointFiredRef = useRef(false)
 
   useEffect(() => {
     if (!isActive) {
-      setPhase('idle')
+      const resetTimer = setTimeout(() => setPhase('idle'), 0)
       midpointFiredRef.current = false
-      return
+      return () => clearTimeout(resetTimer)
     }
 
     // 重置状态

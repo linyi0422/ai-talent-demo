@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Sparkles, Check, Edit3, X, Bot, Zap } from 'lucide-react'
 import InsightOrb from './InsightOrb'
+import { demoHighMoments } from '../data/demoValues'
 
 const STEPS = [
   {
@@ -33,8 +34,6 @@ const STEPS = [
     maxLength: 60,
   },
 ]
-
-const DEMO_VALUES = STEPS.map(s => s.demo)
 
 export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }) {
   const [step, setStep] = useState(0)
@@ -88,7 +87,8 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
   }
 
   const handleDemoFill = () => {
-    setValues([...DEMO_VALUES])
+    setValues([...demoHighMoments])
+    setStep(STEPS.length)
     setShowConfirm(false)
   }
 
@@ -244,7 +244,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
                 whileTap={{ scale: 0.98 }}
               >
                 <Zap className="w-4 h-4" />
-                一键填入范例（演示用）
+                一键填入并预览
               </motion.button>
             )}
 

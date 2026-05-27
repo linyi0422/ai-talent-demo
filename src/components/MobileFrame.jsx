@@ -1,12 +1,16 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 export default function MobileFrame({ children, currentPhase = 'welcome' }) {
   const scrollRef = useRef(null)
 
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0, left: 0 })
+  }, [currentPhase])
+
   return (
     <div className="h-screen flex bg-[#1e1e1e] overflow-hidden">
       {/* ===== 左侧：内容预览区 ===== */}
-      <div className="flex-1 relative bg-slate-50">
+      <div className="flex-1 relative bg-[#151515]">
         {/* 顶部工具栏 */}
         <div className="absolute top-0 left-0 right-0 h-9 bg-[#3c3c3c] flex items-center px-4 z-50">
           <div className="flex items-center gap-2">
@@ -15,24 +19,28 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
             <div className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
           </div>
           <div className="flex-1 text-center">
-            <span className="text-[11px] text-[#999] font-mono">AI 天赋测评 — 预览</span>
+            <span className="text-[11px] text-[#bbb] font-mono">AI 天赋测评 — Demo</span>
           </div>
           <div className="flex items-center gap-3 text-[10px] text-[#666] font-mono">
-            <span>Responsive</span>
+            <span>Presenter</span>
           </div>
         </div>
 
-        {/* 内容区 — 全宽自然流 */}
-        <div
-          ref={scrollRef}
-          className="h-full pt-9 overflow-y-auto overflow-x-hidden scroll-smooth"
-          style={{
-            WebkitOverflowScrolling: 'touch',
-            msOverflowStyle: 'none',
-            scrollbarWidth: 'none',
-          }}
-        >
-          {children}
+        {/* 内容区 — 居中手机演示画布 */}
+        <div className="h-full pt-[60px] px-3 sm:px-6 pb-6 flex items-center justify-center">
+          <div className="relative w-full max-w-[430px] h-[calc(100vh-84px)] max-h-[860px] rounded-[34px] bg-[#111] p-2 shadow-2xl shadow-black/50 border border-white/10">
+            <div
+              ref={scrollRef}
+              className="h-full rounded-[26px] overflow-y-auto overflow-x-hidden scroll-smooth bg-cream"
+              style={{
+                WebkitOverflowScrolling: 'touch',
+                msOverflowStyle: 'none',
+                scrollbarWidth: 'none',
+              }}
+            >
+              {children}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -77,11 +85,11 @@ export default function MobileFrame({ children, currentPhase = 'welcome' }) {
           <div className="space-y-1.5 text-[11px] text-[#999] font-mono">
             <div className="flex justify-between">
               <span>Mode</span>
-              <span className="text-[#ff8a00]">Web Responsive</span>
+              <span className="text-[#ff8a00]">Presenter Demo</span>
             </div>
             <div className="flex justify-between">
-              <span>Max Width</span>
-              <span className="text-[#bbb]">672px</span>
+              <span>Device</span>
+              <span className="text-[#bbb]">430px</span>
             </div>
           </div>
         </div>

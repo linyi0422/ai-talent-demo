@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import * as echarts from 'echarts'
 import { mockUser, talentDimensions } from '../data/mockUser'
@@ -18,7 +18,6 @@ const CHART_COLORS = {
 export default function TalentRadarChart({ onDimensionClick }) {
   const chartRef = useRef(null)
   const [selectedDim, setSelectedDim] = useState(null)
-  const [hoveredDim, setHoveredDim] = useState(null)
   const chartInstance = useRef(null)
 
   const selectedTalent = selectedDim
@@ -147,16 +146,6 @@ export default function TalentRadarChart({ onDimensionClick }) {
       }
     })
 
-    chart.on('mouseover', (params) => {
-      if (params.dataIndex !== undefined) {
-        setHoveredDim(dimData[params.dataIndex].key)
-      }
-    })
-
-    chart.on('mouseout', () => {
-      setHoveredDim(null)
-    })
-
     const handleResize = () => chart.resize()
     window.addEventListener('resize', handleResize)
 
@@ -164,7 +153,7 @@ export default function TalentRadarChart({ onDimensionClick }) {
       window.removeEventListener('resize', handleResize)
       chart.dispose()
     }
-  }, [])
+  }, [onDimensionClick])
 
   return (
     <div className="relative">

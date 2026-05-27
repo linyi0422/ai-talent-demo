@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, Edit3 } from 'lucide-react'
 import { mockUser, talentDimensions } from '../data/mockUser'
@@ -84,12 +84,12 @@ export default function HomePage({ onTalentSelect, highMoments, onEditHighMoment
   const celebritiesRef = useRef(null)
   const careersRef = useRef(null)
 
-  const sectionRefs = {
+  const sectionRefs = useMemo(() => ({
     radar: radarRef,
     scores: scoresRef,
     celebrities: celebritiesRef,
     careers: careersRef,
-  }
+  }), [])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -109,11 +109,11 @@ export default function HomePage({ onTalentSelect, highMoments, onEditHighMoment
     })
 
     return () => observer.disconnect()
-  }, [])
+  }, [sectionRefs])
 
   const scrollToSection = useCallback((key) => {
     sectionRefs[key]?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }, [])
+  }, [sectionRefs])
 
   const topTalents = Object.entries(mockUser.talentScores)
     .sort((a, b) => b[1] - a[1])

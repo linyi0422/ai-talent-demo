@@ -51,9 +51,12 @@ export default function HighMomentsInput({ isOpen, onClose, onSave, initialMomen
 
   useEffect(() => {
     if (isOpen) {
-      setStep(0)
-      setValues(initialMoments.length >= 3 ? initialMoments : ['', '', ''])
-      setHasInteracted(false)
+      const resetTimer = setTimeout(() => {
+        setStep(0)
+        setValues(initialMoments.length >= 3 ? initialMoments : ['', '', ''])
+        setHasInteracted(false)
+      }, 0)
+      return () => clearTimeout(resetTimer)
     }
   }, [isOpen, initialMoments])
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, Edit3, Users, Briefcase, User, RotateCcw, Share2, Bot, TrendingUp } from 'lucide-react'
 import { mockUser, talentDimensions } from '../data/mockUser'
@@ -102,7 +102,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="px-6 sm:px-10 pt-5 pb-8 space-y-6 max-w-2xl mx-auto"
+              className="px-6 sm:px-10 pt-12 pb-8 space-y-6 max-w-2xl mx-auto"
             >
               {/* Hero 区 */}
               <div className="text-center pt-3 pb-2">
@@ -184,7 +184,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="px-6 sm:px-10 pt-5 pb-8 space-y-4 max-w-2xl mx-auto"
+              className="px-6 sm:px-10 pt-12 pb-8 space-y-4 max-w-2xl mx-auto"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-5 h-5 text-hermes-500" />
@@ -205,7 +205,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="px-6 sm:px-10 pt-5 pb-8 space-y-4 max-w-2xl mx-auto"
+              className="px-6 sm:px-10 pt-12 pb-8 space-y-4 max-w-2xl mx-auto"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-5 h-5 text-hermes-500" />
@@ -226,7 +226,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
               transition={{ duration: 0.2 }}
-              className="px-6 sm:px-10 pt-5 pb-8 space-y-6 max-w-2xl mx-auto"
+              className="px-6 sm:px-10 pt-12 pb-8 space-y-6 max-w-2xl mx-auto"
             >
               <div className="card-shadow bg-white rounded-3xl p-5">
                 <div className="flex items-center gap-2 mb-3">

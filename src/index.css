@@ -1,6 +1,8 @@
 @import "tailwindcss";
 
 @theme {
+  --spacing: 0.25rem;
+
   /* === 爱马仕橙主色系 === */
   --color-hermes-50: #fff8f0;
   --color-hermes-100: #ffeedb;
@@ -14,7 +16,7 @@
   --color-hermes-900: #4d2800;
 
   /* === 爱马仕经典配色 === */
-  --color-cream: #eddaf;
+  --color-cream: #eddaaf;
   --color-cream-light: #f5efd8;
   --color-cream-dark: #d4c8a0;
 
@@ -50,8 +52,6 @@
 }
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
 }
 
@@ -60,7 +60,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-  background: #eddaf;
+  background: #eddaaf;
 }
 
 #root {

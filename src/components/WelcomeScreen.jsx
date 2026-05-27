@@ -4,7 +4,7 @@ import { Sparkles } from 'lucide-react'
 import AnimatedBackground from './AnimatedBackground'
 import InsightOrb from './InsightOrb'
 
-export default function WelcomeScreen({ onStart }) {
+export default function WelcomeScreen({ onStart, onQuickDemo }) {
   const [titleVisible, setTitleVisible] = useState(false)
   const [subtitleVisible, setSubtitleVisible] = useState(false)
   const [btnVisible, setBtnVisible] = useState(false)
@@ -63,17 +63,29 @@ export default function WelcomeScreen({ onStart }) {
         </motion.p>
 
         {/* CTA 按钮 */}
-        <motion.button
-          onClick={onStart}
-          className="px-10 py-4 bg-gradient-to-r from-hermes-500 to-hermes-600 text-white rounded-3xl font-semibold text-base shadow-lg shadow-hermes-300/30 hover:shadow-xl hover:shadow-hermes-300/40 hover:-translate-y-0.5 active:scale-[0.98] transition-btn flex items-center gap-2.5"
+        <motion.div
+          className="flex flex-col sm:flex-row items-center justify-center gap-3"
           initial={{ opacity: 0, y: 20 }}
           animate={btnVisible ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5, type: 'spring' }}
-          whileTap={{ scale: 0.98 }}
         >
-          <Sparkles className="w-5 h-5" />
-          开始 AI 测评
-        </motion.button>
+          <motion.button
+            onClick={onStart}
+            className="shrink-0 whitespace-nowrap px-9 py-4 bg-gradient-to-r from-hermes-500 to-hermes-600 text-white rounded-3xl font-semibold text-base shadow-lg shadow-hermes-300/30 hover:shadow-xl hover:shadow-hermes-300/40 hover:-translate-y-0.5 active:scale-[0.98] transition-btn flex items-center gap-2.5"
+            whileTap={{ scale: 0.98 }}
+          >
+            <Sparkles className="w-5 h-5" />
+            开始 AI 测评
+          </motion.button>
+          <motion.button
+            onClick={onQuickDemo}
+            className="shrink-0 whitespace-nowrap px-8 py-4 bg-white/80 text-hermes-600 rounded-3xl font-semibold text-base shadow-sm border border-hermes-100 hover:bg-white hover:shadow-md hover:-translate-y-0.5 active:scale-[0.98] transition-btn flex items-center gap-2.5"
+            whileTap={{ scale: 0.98 }}
+          >
+            <Sparkles className="w-5 h-5" />
+            快速演示
+          </motion.button>
+        </motion.div>
 
         {/* 底部品牌 */}
         <motion.p

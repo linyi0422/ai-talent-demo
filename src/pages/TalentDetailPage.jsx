@@ -77,7 +77,7 @@ export default function TalentDetailPage({ talentKey: propKey, inSheet, onTalent
     .filter(([key]) => key !== talentKey)
     .slice(0, 3)
 
-  const percentile = Math.round((score / 100) * 98 + Math.random() * 2)
+  const percentile = Math.min(99, Math.round((score / 100) * 98 + (talentKey.length % 3)))
 
   const content = (
     <div className={`${inSheet ? '' : 'min-h-screen bg-[#EDDDAF]'}`}>
@@ -220,7 +220,7 @@ export default function TalentDetailPage({ talentKey: propKey, inSheet, onTalent
               <h3 className="text-sm font-semibold text-slate-700">探索更多维度</h3>
             </div>
             <div className="grid grid-cols-3 gap-2">
-              {sortedDimensions.map(([key, dimScore], i) => {
+              {sortedDimensions.map(([key, dimScore]) => {
                 const t = talentDimensions.find(d => d.key === key)
                 return (
                   <button
