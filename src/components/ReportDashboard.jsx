@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Edit3, Users, Briefcase, User, RotateCcw, Share2, Bot, TrendingUp, Link2, MessageCircle, AtSign } from 'lucide-react'
+import { Sparkles, Edit3, Users, Briefcase, User, RotateCcw, Share2, Bot, TrendingUp, Link2, MessageCircle, AtSign, Camera, Bookmark, ArrowLeft } from 'lucide-react'
 import { mockUser, talentDimensions } from '../data/mockUser'
 import { celebrities } from '../data/celebrities'
 import { careers } from '../data/careers'
@@ -137,6 +137,33 @@ function CreatorCard({ item, index }) {
   )
 }
 
+function XiaohongshuCard({ title, kicker, children, index }) {
+  return (
+    <motion.div
+      className="relative overflow-hidden bg-white rounded-3xl p-5 shadow-md border border-cream-100 min-h-[430px] flex flex-col"
+      initial={{ opacity: 0, y: 16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08 }}
+    >
+      <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-hermes-500 via-rose-400 to-amber-300" />
+      <div className="flex items-center justify-between mb-4">
+        <span className="text-[11px] font-semibold tracking-[0.18em] text-hermes-500 uppercase">
+          {kicker}
+        </span>
+        <Bookmark className="w-4 h-4 text-rose-400" />
+      </div>
+      <h3 className="text-2xl font-bold text-slate-800 leading-tight mb-4">{title}</h3>
+      <div className="flex-1">
+        {children}
+      </div>
+      <div className="pt-4 mt-4 border-t border-cream-100 flex items-center justify-between">
+        <span className="text-xs text-slate-400">AI 天赋测评 Demo</span>
+        <span className="text-xs text-hermes-500 font-medium">#求职 #AI产品 #人脉连接</span>
+      </div>
+    </motion.div>
+  )
+}
+
 export default function ReportDashboard({ highMoments, onTalentSelect, onRestart, onEditMoments }) {
   const [activeTab, setActiveTab] = useState('overview')
   const [selectedDim, setSelectedDim] = useState(null)
@@ -245,6 +272,13 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                   <MessageCircle className="w-4 h-4" />
                   查看人脉与博主推荐
                 </button>
+                <button
+                  onClick={() => setActiveTab('share')}
+                  className="w-full mt-3 py-3 rounded-2xl bg-white text-slate-600 text-sm font-medium flex items-center justify-center gap-2 border border-cream-100 hover:border-hermes-200 hover:text-hermes-600 transition-btn"
+                >
+                  <Camera className="w-4 h-4" />
+                  生成小红书展示卡
+                </button>
               </div>
 
               {/* 天赋图谱 */}
@@ -343,6 +377,91 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
             </motion.div>
           )}
 
+          {activeTab === 'share' && (
+            <motion.div
+              key="share"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="px-6 sm:px-10 pt-10 pb-8 space-y-5 max-w-2xl mx-auto"
+            >
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => setActiveTab('overview')}
+                  className="w-9 h-9 rounded-full bg-white shadow-sm flex items-center justify-center text-slate-500 hover:text-hermes-600 transition-colors"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                </button>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <Camera className="w-5 h-5 text-hermes-500" />
+                    <h2 className="font-semibold text-base text-slate-800">小红书展示卡</h2>
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">适合截图成图文笔记，也适合录屏做竖屏视频</p>
+                </div>
+              </div>
+
+              <XiaohongshuCard title="AI 帮我看懂自己的求职优势" kicker="Card 01 / Talent" index={0}>
+                <div className="flex items-center gap-4 mb-5">
+                  <div className="w-16 h-16 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl">🧠</div>
+                  <div>
+                    <p className="text-xl font-bold text-slate-800">{mockUser.name}</p>
+                    <p className="text-sm text-slate-400 mt-1">AI Native Product Manager</p>
+                  </div>
+                </div>
+                <div className="space-y-3">
+                  {topTalents.map(([key, score]) => {
+                    const talent = talentDimensions.find(t => t.key === key)
+                    return (
+                      <div key={key} className="flex items-center gap-3 bg-cream-50 rounded-2xl p-3">
+                        <span className="text-xl">{talent?.icon}</span>
+                        <span className="text-sm font-medium text-slate-700 flex-1">{key}</span>
+                        <span className="text-lg font-bold text-hermes-600">{score}</span>
+                      </div>
+                    )
+                  })}
+                </div>
+                <p className="text-sm text-slate-600 leading-relaxed mt-5">
+                  不是只看 MBTI，而是把高光经历拆成企业能识别的能力信号。
+                </p>
+              </XiaohongshuCard>
+
+              <XiaohongshuCard title="我的求职人脉地图" kicker="Card 02 / Connection" index={1}>
+                <div className="space-y-3">
+                  {connectionTargets.map((item, i) => (
+                    <div key={item.title} className="relative bg-cream-50 rounded-2xl p-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="w-6 h-6 rounded-full bg-hermes-500 text-white text-xs font-bold flex items-center justify-center">
+                          {i + 1}
+                        </span>
+                        <p className="text-sm font-semibold text-slate-800">{item.title}</p>
+                      </div>
+                      <p className="text-xs text-hermes-600 mb-1">{item.relation}</p>
+                      <p className="text-xs text-slate-500 leading-relaxed">{item.fit}</p>
+                    </div>
+                  ))}
+                </div>
+              </XiaohongshuCard>
+
+              <XiaohongshuCard title="可以直接复制的私信开场白" kicker="Card 03 / Message" index={2}>
+                <div className="bg-cream-50 rounded-2xl p-4 mb-4">
+                  <p className="text-xs font-semibold text-hermes-600 mb-2">发给目标团队 PM / 运营</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">{connectionTargets[1].opener}</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-semibold text-slate-500">建议关注的信息源</p>
+                  {creatorRecommendations.slice(0, 3).map((item) => (
+                    <div key={item.name} className="flex items-center justify-between gap-3 bg-white rounded-xl px-3 py-2 border border-cream-100">
+                      <span className="text-sm font-medium text-slate-700 truncate">{item.name}</span>
+                      <span className="text-[10px] text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full shrink-0">{item.focus.split('、')[0]}</span>
+                    </div>
+                  ))}
+                </div>
+              </XiaohongshuCard>
+            </motion.div>
+          )}
+
           {activeTab === 'me' && (
             <motion.div
               key="me"
@@ -404,6 +523,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                     重新测评
                   </button>
                   <button
+                    onClick={() => setActiveTab('share')}
                     className="flex-1 py-3 rounded-2xl bg-hermes-500 text-white text-sm font-medium flex items-center justify-center gap-2 shadow-sm hover:bg-hermes-600 hover:shadow-md hover:-translate-y-0.5 transition-btn"
                   >
                     <Share2 className="w-4 h-4" />
