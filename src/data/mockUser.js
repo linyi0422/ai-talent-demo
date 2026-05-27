@@ -1,5 +1,5 @@
 export const mockUser = {
-  name: '思源',
+  name: '皮卡丘',
   avatar: 'https://api.dicebear.com/9.x/avataaars/svg?seed=Sylan',
   talentScores: {
    执行力: 92,
