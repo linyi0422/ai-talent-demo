@@ -5,9 +5,9 @@ import InsightOrb from './InsightOrb'
 
 const PIPELINE = [
   { label: '分析你的高光时刻', icon: '🔍', detail: '提取关键能力特征...' },
-  { label: '连接岗位能力模型', icon: '🧬', detail: '匹配企业真实招聘信号...' },
-  { label: '生成求职表达桥梁', icon: '🔗', detail: '把经历转译成简历和面试语言...' },
-  { label: '推荐机会连接路径', icon: '🎯', detail: '结合岗位、团队和人脉触点...' },
+  { label: '匹配核心能力维度', icon: '🧬', detail: '构建天赋画像...' },
+  { label: '匹配名人发展路径', icon: '🌟', detail: '寻找相似天赋的成功者...' },
+  { label: '生成职业推荐方案', icon: '🎯', detail: '结合市场趋势生成推荐...' },
 ]
 
 export default function AIAnalysisScreen({ highMoments, onDone }) {
@@ -66,8 +66,8 @@ export default function AIAnalysisScreen({ highMoments, onDone }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
         >
-          <h2 className="text-2xl font-bold text-slate-800 mb-2">AI 正在连接求职机会</h2>
-          <p className="text-sm text-slate-400">基于 {highMoments.length} 条高光时刻生成职业连接图</p>
+          <h2 className="text-2xl font-bold text-slate-800 mb-2">AI 正在分析你的天赋</h2>
+          <p className="text-sm text-slate-400">基于 {highMoments.length} 条高光时刻</p>
         </motion.div>
 
         {/* 管线步骤 */}

@@ -7,12 +7,12 @@ import { demoHighMoments } from '../data/demoValues'
 const STEPS = [
   {
     key: 'moment1',
-    aiGreeting: '你好！我是你的 AI 职业连接助手 🧠',
-    aiMessage: '在连接岗位机会之前，我想先了解你。告诉我——你最骄傲的一件事是什么？',
-    aiHint: '比如拿过什么奖、做成过什么项目、突破过什么难关，AI 会把它转成求职信号...',
+    aiGreeting: '你好！我是你的 AI 天赋分析师 🧠',
+    aiMessage: '在开始分析之前，我想先了解你。告诉我——你最骄傲的一件事是什么？',
+    aiHint: '比如拿过什么奖、做成过什么项目、突破过什么难关...',
     placeholder: '大学期间带队拿下全国创新创业大赛金奖...',
     demo: '带队拿下全国创新创业大赛金奖，从0到1打造AI产品',
-    aiConfirm: '很棒的经历！这能连接到「从 0 到 1」和「团队推进」这类岗位信号 ✨',
+    aiConfirm: '很棒的经历！这种成就感往往暗示着你的核心天赋 ✨',
     maxLength: 60,
   },
   {
@@ -21,7 +21,7 @@ const STEPS = [
     aiHint: '那个让你确认自己方向、发现自己天赋的时刻',
     placeholder: '独立完成AI产品从0到1，拿到2000+用户...',
     demo: '独立完成AI产品0到1，获2000+用户和500+付费',
-    aiConfirm: '这正是自我驱动的体现！AI 已经在捕捉可以写进简历的证据 📡',
+    aiConfirm: '这正是自我驱动的体现！AI 已经在捕捉你的天赋信号了 📡',
     maxLength: 60,
   },
   {
@@ -30,7 +30,7 @@ const STEPS = [
     aiHint: '可以是任何领域——学习、创作、社交、运动...',
     placeholder: '公众号单篇阅读量突破30万...',
     demo: '公众号单篇阅读30万+，IMA知识库1万+条提示词',
-    aiConfirm: '太好了！我会把这些经历连接到岗位、表达和机会路径 🚀',
+    aiConfirm: '太好了！我已收集到足够的信息，准备为你生成天赋报告 🚀',
     maxLength: 60,
   },
 ]
@@ -148,7 +148,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], 
 
         <div className="flex items-center gap-2">
           <Bot className="w-5 h-5 text-hermes-500" />
-          <span className="text-sm font-medium text-hermes-600">AI 职业连接助手</span>
+          <span className="text-sm font-medium text-hermes-600">AI 天赋分析师</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -438,7 +438,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], 
               }`}
               whileTap={currentValue.trim() && !isAutoPlaying ? { scale: 0.98 } : {}}
             >
-              {showConfirm ? 'AI 连接中...' : (isLastStep ? '生成职业连接报告' : '下一步')}
+              {showConfirm ? 'AI 分析中...' : (isLastStep ? '生成天赋报告' : '下一步')}
               {!showConfirm && <ArrowRight className="w-5 h-5" />}
             </motion.button>
           </>
@@ -454,7 +454,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], 
             whileTap={allFilled ? { scale: 0.98 } : {}}
           >
             <Sparkles className="w-5 h-5" />
-            确认，开始连接机会
+            确认，开始 AI 分析
           </motion.button>
         )}
       </div>

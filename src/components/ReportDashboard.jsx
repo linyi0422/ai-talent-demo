@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, Edit3, Users, Briefcase, User, RotateCcw, Share2, Bot, TrendingUp, Link2, MessageSquare } from 'lucide-react'
+import { Sparkles, Edit3, Users, Briefcase, User, RotateCcw, Share2, Bot, TrendingUp, Link2, MessageCircle, AtSign } from 'lucide-react'
 import { mockUser, talentDimensions } from '../data/mockUser'
 import { celebrities } from '../data/celebrities'
 import { careers } from '../data/careers'
-import { connectionInsights, connectionSummary } from '../data/connections'
+import { connectionTargets, creatorRecommendations } from '../data/socialConnections'
 import AnimatedBackground from './AnimatedBackground'
 import TalentRadarChart from './TalentRadarChart'
 import TalentScoreBarList from './TalentScoreBar'
@@ -76,33 +76,62 @@ function TypewriterText({ texts }) {
 
 const TABS = [
   { key: 'overview', label: '总览', icon: TrendingUp },
-  { key: 'celebrities', label: '路径', icon: Users },
-  { key: 'careers', label: '连接', icon: Briefcase },
+  { key: 'celebrities', label: '名人', icon: Users },
+  { key: 'careers', label: '职业', icon: Briefcase },
+  { key: 'network', label: '人脉', icon: Link2 },
   { key: 'me', label: '我的', icon: User },
 ]
 
-function ConnectionInsightCard({ item, index }) {
+function ConnectionTargetCard({ item, index }) {
   return (
     <motion.div
-      className="rounded-2xl bg-white p-4 shadow-sm border border-cream-100"
+      className="bg-white rounded-2xl p-4 shadow-sm border border-cream-100"
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.08 }}
+    >
+      <div className="flex items-start gap-3 mb-3">
+        <div className="w-9 h-9 rounded-xl bg-hermes-50 flex items-center justify-center shrink-0">
+          <MessageCircle className="w-4 h-4 text-hermes-500" />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-sm font-semibold text-slate-800">{item.title}</h3>
+          <p className="text-xs text-hermes-500 mt-0.5">{item.relation}</p>
+        </div>
+      </div>
+      <p className="text-sm text-slate-600 leading-relaxed mb-2">{item.fit}</p>
+      <p className="text-xs text-slate-400 leading-relaxed mb-3">{item.why}</p>
+      <div className="bg-cream-50 rounded-xl p-3">
+        <p className="text-[11px] font-medium text-hermes-600 mb-1">私信开场白</p>
+        <p className="text-xs text-slate-500 leading-relaxed">{item.opener}</p>
+      </div>
+    </motion.div>
+  )
+}
+
+function CreatorCard({ item, index }) {
+  return (
+    <motion.div
+      className="bg-white rounded-2xl p-4 shadow-sm border border-cream-100"
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.1 + index * 0.08 }}
     >
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-xs font-semibold text-hermes-600 bg-hermes-50 px-2.5 py-1 rounded-full">
-          {item.signal}
-        </span>
-        <Link2 className="w-4 h-4 text-hermes-400" />
-        <span className="text-xs text-slate-500 flex-1 truncate">{item.target}</span>
-      </div>
-      <p className="text-sm text-slate-600 leading-relaxed mb-3">{item.bridge}</p>
-      <div className="bg-cream-50 rounded-xl p-3">
-        <div className="flex items-center gap-1.5 mb-1.5">
-          <MessageSquare className="w-3.5 h-3.5 text-hermes-500" />
-          <span className="text-xs font-medium text-hermes-600">可用于简历/面试</span>
+      <div className="flex items-start gap-3">
+        <div className="w-9 h-9 rounded-xl bg-hermes-50 flex items-center justify-center shrink-0">
+          <AtSign className="w-4 h-4 text-hermes-500" />
         </div>
-        <p className="text-xs text-slate-500 leading-relaxed">{item.pitch}</p>
+        <div className="min-w-0 flex-1">
+          <div className="flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-slate-800 truncate">{item.name}</h3>
+            <span className="text-[10px] text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full shrink-0">
+              {item.platform}
+            </span>
+          </div>
+          <p className="text-xs text-slate-400 mt-1">{item.focus}</p>
+          <p className="text-xs text-slate-600 leading-relaxed mt-2">{item.why}</p>
+          <p className="text-xs text-hermes-600 leading-relaxed mt-2">{item.action}</p>
+        </div>
       </div>
     </motion.div>
   )
@@ -143,7 +172,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                   </div>
                 </div>
                 <h1 className="text-2xl font-bold text-slate-800 font-serif">{mockUser.name}</h1>
-                <p className="text-sm text-slate-400 tracking-wider mt-1">{connectionSummary.role}</p>
+                <p className="text-sm text-slate-400 tracking-wider mt-1">AI Native Product Manager</p>
                 <div className="hermes-divider my-4" />
               </div>
 
@@ -151,7 +180,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               <div className="flex items-start gap-3 px-4 py-4 bg-hermes-50/60 rounded-2xl shadow-sm">
                 <Bot className="w-5 h-5 text-hermes-500 shrink-0 mt-0.5" />
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {connectionSummary.pitch}
+                  你的天赋组合极具 AI 时代竞争力——<strong className="text-hermes-600">执行力</strong>是你的超级能力，配合<strong className="text-hermes-600">自我驱动</strong>和<strong className="text-hermes-600">产品直觉</strong>，适合在快速变化的领域做从 0 到 1 的突破。
                 </p>
               </div>
 
@@ -190,27 +219,32 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 </button>
               </div>
 
-              {/* 职业连接 */}
+              {/* 求职社交连接 */}
               <div className="card-shadow bg-white rounded-3xl p-5">
                 <div className="flex items-start gap-3 mb-4">
                   <div className="w-10 h-10 rounded-2xl bg-hermes-50 flex items-center justify-center shrink-0">
                     <Link2 className="w-5 h-5 text-hermes-500" />
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2">
-                      <h2 className="font-semibold text-base text-slate-800">{connectionSummary.title}</h2>
-                      <span className="text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">
-                        {connectionSummary.match}%
-                      </span>
-                    </div>
-                    <p className="text-xs text-slate-400 mt-1">{connectionSummary.subtitle}</p>
+                  <div className="min-w-0 flex-1">
+                    <h2 className="font-semibold text-base text-slate-800">求职社交连接</h2>
+                    <p className="text-xs text-slate-400 mt-1">AI 根据你的高光经历，推荐下一步该联系谁</p>
                   </div>
                 </div>
-                <div className="space-y-3">
-                  {connectionInsights.slice(0, 2).map((item, index) => (
-                    <ConnectionInsightCard key={item.signal} item={item} index={index} />
+                <div className="grid grid-cols-3 gap-2 mb-4">
+                  {connectionTargets.map((item) => (
+                    <div key={item.title} className="bg-cream-50 rounded-xl px-2.5 py-3 text-center">
+                      <p className="text-xs font-medium text-slate-700 leading-snug">{item.title}</p>
+                      <p className="text-[10px] text-hermes-500 mt-1">{item.relation}</p>
+                    </div>
                   ))}
                 </div>
+                <button
+                  onClick={() => setActiveTab('network')}
+                  className="w-full py-3 rounded-2xl bg-hermes-50 text-hermes-600 text-sm font-medium flex items-center justify-center gap-2 hover:bg-hermes-100 transition-btn"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  查看人脉与博主推荐
+                </button>
               </div>
 
               {/* 天赋图谱 */}
@@ -218,7 +252,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 <div className="flex items-center gap-2 mb-2">
                   <Sparkles className="w-5 h-5 text-hermes-500" />
                   <h2 className="font-semibold text-base text-slate-800">天赋图谱</h2>
-                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">AI 连接</span>
+                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">AI 分析</span>
                 </div>
                 <p className="text-xs text-slate-400 mb-3">点击节点查看详情</p>
                 <TalentRadarChart
@@ -260,18 +294,52 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
             >
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-5 h-5 text-hermes-500" />
-                <h2 className="font-semibold text-base text-slate-800">机会连接</h2>
-                <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">AI Connection</span>
+                <h2 className="font-semibold text-base text-slate-800">职业推荐</h2>
+                <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">AI 推荐</span>
               </div>
-              <p className="text-sm text-slate-400 mb-2">把高光经历转译成企业能识别的岗位信号、沟通话术和连接路径</p>
-              <div className="space-y-3 mb-4">
-                {connectionInsights.map((item, index) => (
-                  <ConnectionInsightCard key={item.signal} item={item} index={index} />
-                ))}
-              </div>
+              <p className="text-sm text-slate-400 mb-2">天赋 + 市场趋势，AI 为你生成最适合的职业方向</p>
               {careers.map((career) => (
                 <CareerRecommendationCard key={career.id} career={career} />
               ))}
+            </motion.div>
+          )}
+
+          {activeTab === 'network' && (
+            <motion.div
+              key="network"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{ duration: 0.2 }}
+              className="px-6 sm:px-10 pt-12 pb-8 space-y-6 max-w-2xl mx-auto"
+            >
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <Link2 className="w-5 h-5 text-hermes-500" />
+                  <h2 className="font-semibold text-base text-slate-800">你可以联系谁</h2>
+                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">Connection</span>
+                </div>
+                <p className="text-sm text-slate-400 mb-3">从“高光经历”出发，把求职变成具体的人脉动作</p>
+                <div className="space-y-3">
+                  {connectionTargets.map((item, index) => (
+                    <ConnectionTargetCard key={item.title} item={item} index={index} />
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <AtSign className="w-5 h-5 text-hermes-500" />
+                  <h2 className="font-semibold text-base text-slate-800">相关行业社媒博主</h2>
+                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">Follow</span>
+                </div>
+                <p className="text-sm text-slate-400 mb-3">帮助你补齐 AI 产品、产品求职和行业信息差</p>
+                <div className="space-y-3">
+                  {creatorRecommendations.map((item, index) => (
+                    <CreatorCard key={item.name} item={item} index={index} />
+                  ))}
+                </div>
+              </div>
             </motion.div>
           )}
 
@@ -324,7 +392,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                   className="w-full py-4 rounded-2xl bg-hermes-50 text-hermes-600 text-base font-medium flex items-center justify-center gap-2 hover:bg-hermes-100 hover:-translate-y-0.5 transition-btn"
                 >
                   <Bot className="w-5 h-5" />
-                  更新高光时刻，获得更精准的机会连接
+                  更新高光时刻，获得更精准的 AI 分析
                 </button>
 
                 <div className="flex gap-3">
@@ -361,7 +429,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               <button
                 key={key}
                 onClick={() => setActiveTab(key)}
-                className={`flex flex-col items-center gap-1 px-4 py-1.5 rounded-xl transition-btn ${
+                className={`flex flex-col items-center gap-1 px-3 py-1.5 rounded-xl transition-btn ${
                   isActive ? 'text-hermes-600' : 'text-slate-400'
                 }`}
               >
