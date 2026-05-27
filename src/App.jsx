@@ -6,13 +6,13 @@ import AIChatOnboarding from './components/AIChatOnboarding'
 import AIAnalysisScreen from './components/AIAnalysisScreen'
 import ReportDashboard from './components/ReportDashboard'
 import TalentDetailPage from './pages/TalentDetailPage'
-import { demoHighMoments } from './data/demoValues'
 
 // Phase state machine: welcome → onboard → analysis → report
 export default function App() {
   const [phase, setPhase] = useState('welcome')
   const [highMoments, setHighMoments] = useState([])
   const [selectedTalent, setSelectedTalent] = useState(null)
+  const [autoDemo, setAutoDemo] = useState(false)
 
   const transitionTo = useCallback((targetPhase) => {
     setPhase(targetPhase)
@@ -28,12 +28,14 @@ export default function App() {
 
   const handleSaveHighMoments = useCallback((moments) => {
     setHighMoments(moments)
+    setAutoDemo(false)
     transitionTo('analysis')
   }, [transitionTo])
 
   const handleQuickDemo = useCallback(() => {
-    setHighMoments([...demoHighMoments])
-    transitionTo('analysis')
+    setHighMoments([])
+    setAutoDemo(true)
+    transitionTo('onboard')
   }, [transitionTo])
 
   const handleAnalysisDone = useCallback(() => {
@@ -43,6 +45,7 @@ export default function App() {
   const handleRestart = useCallback(() => {
     setHighMoments([])
     setSelectedTalent(null)
+    setAutoDemo(false)
     transitionTo('welcome')
   }, [transitionTo])
 
@@ -51,7 +54,10 @@ export default function App() {
       {/* Phase 0: Welcome */}
       {phase === 'welcome' && (
         <WelcomeScreen
-          onStart={() => transitionTo('onboard')}
+          onStart={() => {
+            setAutoDemo(false)
+            transitionTo('onboard')
+          }}
           onQuickDemo={handleQuickDemo}
         />
       )}
@@ -62,6 +68,7 @@ export default function App() {
           onSave={handleSaveHighMoments}
           onBack={() => transitionTo('welcome')}
           initialMoments={highMoments}
+          autoDemo={autoDemo}
         />
       )}
 
@@ -80,7 +87,10 @@ export default function App() {
             highMoments={highMoments}
             onTalentSelect={handleTalentSelect}
             onRestart={handleRestart}
-            onEditMoments={() => transitionTo('onboard')}
+            onEditMoments={() => {
+              setAutoDemo(false)
+              transitionTo('onboard')
+            }}
           />
 
           <BottomSheet

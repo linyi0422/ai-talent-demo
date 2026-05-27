@@ -35,10 +35,13 @@ const STEPS = [
   },
 ]
 
-export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }) {
+export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], autoDemo = false }) {
   const [step, setStep] = useState(0)
-  const [values, setValues] = useState(initialMoments.length >= 3 ? [...initialMoments] : ['', '', ''])
+  const [values, setValues] = useState(() => (
+    autoDemo || initialMoments.length < 3 ? ['', '', ''] : [...initialMoments]
+  ))
   const [showConfirm, setShowConfirm] = useState(false)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(autoDemo)
   const textareaRef = useRef(null)
   const chatEndRef = useRef(null)
 
@@ -51,10 +54,45 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
   }, [step, showConfirm])
 
   const current = STEPS[step]
-  const currentValue = values[step]
+  const currentValue = values[step] || ''
   const isLastStep = step === STEPS.length - 1
   const isReviewStep = step === STEPS.length
   const allFilled = values.every(v => v.trim().length > 0)
+
+  useEffect(() => {
+    if (!autoDemo || !isAutoPlaying) return undefined
+
+    let timer
+    if (isReviewStep) {
+      timer = setTimeout(() => {
+        setIsAutoPlaying(false)
+        onSave(values.filter(v => v.trim()))
+      }, 1200)
+    } else if (!currentValue.trim()) {
+      timer = setTimeout(() => {
+        setValues(prev => {
+          const next = [...prev]
+          next[step] = demoHighMoments[step]
+          return next
+        })
+      }, 900)
+    } else if (!showConfirm) {
+      timer = setTimeout(() => {
+        setShowConfirm(true)
+      }, 700)
+    } else {
+      timer = setTimeout(() => {
+        if (step < STEPS.length - 1) {
+          setStep(prev => prev + 1)
+          setShowConfirm(false)
+        } else {
+          setStep(STEPS.length)
+        }
+      }, 1200)
+    }
+
+    return () => clearTimeout(timer)
+  }, [autoDemo, currentValue, isAutoPlaying, isReviewStep, onSave, showConfirm, step, values])
 
   const updateValue = (val) => {
     const next = [...values]
@@ -87,6 +125,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
   }
 
   const handleDemoFill = () => {
+    setIsAutoPlaying(false)
     setValues([...demoHighMoments])
     setStep(STEPS.length)
     setShowConfirm(false)
@@ -235,7 +274,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
       <div className="shrink-0 px-6 sm:px-10 pb-6 pt-3 bg-cream/80 backdrop-blur-sm" style={{ borderTop: '1px solid rgba(212, 200, 160, 0.35)' }}>
         {!isReviewStep ? (
           <>
-            {values.every(v => !v.trim()) && (
+            {values.every(v => !v.trim()) && !isAutoPlaying && (
               <motion.button
                 onClick={handleDemoFill}
                 className="w-full mb-3 py-3 rounded-2xl bg-hermes-50 text-hermes-600 text-sm font-medium flex items-center justify-center gap-2 border border-hermes-100 hover:bg-hermes-100 hover:border-hermes-200 hover:-translate-y-0.5 transition-btn active:scale-[0.98]"
@@ -255,6 +294,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
                 onChange={(e) => updateValue(e.target.value)}
                 placeholder={current.placeholder}
                 rows={3}
+                readOnly={isAutoPlaying}
                 className="w-full px-5 py-4 bg-white rounded-2xl text-base text-slate-700 placeholder-slate-300 resize-none focus:outline-none focus:ring-2 focus:ring-hermes-100 shadow-sm focus:shadow-md transition-input"
               />
               <div className="flex items-center justify-between mt-2 px-2">
@@ -271,13 +311,13 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [] }
 
             <motion.button
               onClick={goNext}
-              disabled={!currentValue.trim() || showConfirm}
+              disabled={!currentValue.trim() || showConfirm || isAutoPlaying}
               className={`w-full mt-3 py-4 rounded-2xl font-medium text-base flex items-center justify-center gap-2 transition-btn ${
-                currentValue.trim() && !showConfirm
+                currentValue.trim() && !showConfirm && !isAutoPlaying
                   ? 'bg-hermes-500 text-white shadow-md shadow-hermes-200 hover:bg-hermes-600 hover:-translate-y-0.5 active:scale-[0.98]'
                   : 'bg-slate-100 text-slate-400 cursor-not-allowed'
               }`}
-              whileTap={currentValue.trim() ? { scale: 0.98 } : {}}
+              whileTap={currentValue.trim() && !isAutoPlaying ? { scale: 0.98 } : {}}
             >
               {showConfirm ? 'AI 分析中...' : (isLastStep ? '生成天赋报告' : '下一步')}
               {!showConfirm && <ArrowRight className="w-5 h-5" />}
