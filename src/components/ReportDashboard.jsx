@@ -75,10 +75,9 @@ function TypewriterText({ texts }) {
 }
 
 const TABS = [
-  { key: 'overview', label: '总览', icon: TrendingUp },
-  { key: 'celebrities', label: '名人', icon: Users },
-  { key: 'careers', label: '职业', icon: Briefcase },
-  { key: 'network', label: '人脉', icon: Link2 },
+  { key: 'overview', label: '名片', icon: TrendingUp },
+  { key: 'network', label: '社交', icon: Link2 },
+  { key: 'celebrities', label: '导师', icon: Users },
   { key: 'me', label: '我的', icon: User },
 ]
 
@@ -158,7 +157,7 @@ function XiaohongshuCard({ title, kicker, children, index }) {
       </div>
       <div className="pt-4 mt-4 border-t border-cream-100 flex items-center justify-between">
         <span className="text-xs text-slate-400">AI 天赋测评 Demo</span>
-        <span className="text-xs text-hermes-500 font-medium">#求职 #AI产品 #人脉连接</span>
+        <span className="text-xs text-hermes-500 font-medium">#求职天赋名片 #社交链接推荐 #名人导师团</span>
       </div>
     </motion.div>
   )
@@ -190,6 +189,10 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
             >
               {/* Hero 区 */}
               <div className="text-center pt-3 pb-2">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-hermes-50 text-hermes-600 text-xs font-medium mb-4">
+                  <Briefcase className="w-3.5 h-3.5" />
+                  求职天赋名片
+                </div>
                 <div className="relative inline-block mb-4">
                   <div className="w-20 h-20 rounded-full bg-gradient-to-br from-cream-100 to-cream-200 flex items-center justify-center text-[36px] leading-none border-2 border-cream-200 shadow-md">
                     🧠
@@ -203,11 +206,11 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 <div className="hermes-divider my-4" />
               </div>
 
-              {/* AI 一句话总结 */}
+              {/* 求职天赋名片总结 */}
               <div className="flex items-start gap-3 px-4 py-4 bg-hermes-50/60 rounded-2xl shadow-sm">
                 <Bot className="w-5 h-5 text-hermes-500 shrink-0 mt-0.5" />
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  你的天赋组合极具 AI 时代竞争力——<strong className="text-hermes-600">执行力</strong>是你的超级能力，配合<strong className="text-hermes-600">自我驱动</strong>和<strong className="text-hermes-600">产品直觉</strong>，适合在快速变化的领域做从 0 到 1 的突破。
+                  这张名片把你的高光经历转成求职语言：<strong className="text-hermes-600">执行力</strong>是你的超级能力，配合<strong className="text-hermes-600">自我驱动</strong>和<strong className="text-hermes-600">产品直觉</strong>，适合连接 AI 产品、用户增长和内容影响力相关机会。
                 </p>
               </div>
 
@@ -253,8 +256,8 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                     <Link2 className="w-5 h-5 text-hermes-500" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h2 className="font-semibold text-base text-slate-800">求职社交连接</h2>
-                    <p className="text-xs text-slate-400 mt-1">AI 根据你的高光经历，推荐下一步该联系谁</p>
+                    <h2 className="font-semibold text-base text-slate-800">社交链接推荐</h2>
+                    <p className="text-xs text-slate-400 mt-1">AI 根据你的高光经历，推荐该联系谁、关注谁</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-3 gap-2 mb-4">
@@ -270,7 +273,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                   className="w-full py-3 rounded-2xl bg-hermes-50 text-hermes-600 text-sm font-medium flex items-center justify-center gap-2 hover:bg-hermes-100 transition-btn"
                 >
                   <MessageCircle className="w-4 h-4" />
-                  查看人脉与博主推荐
+                  查看社交链接推荐
                 </button>
                 <button
                   onClick={() => setActiveTab('share')}
@@ -307,10 +310,10 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
             >
               <div className="flex items-center gap-2 mb-2">
                 <Sparkles className="w-5 h-5 text-hermes-500" />
-                <h2 className="font-semibold text-base text-slate-800">名人发展建议</h2>
-                <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">AI 匹配</span>
+                <h2 className="font-semibold text-base text-slate-800">名人导师团建议</h2>
+                <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">Mentor Board</span>
               </div>
-              <p className="text-sm text-slate-400 mb-2">基于你的天赋画像，AI 筛选出最匹配的名人发展路径</p>
+              <p className="text-sm text-slate-400 mb-2">基于你的天赋画像，AI 组建一组可参考的“虚拟导师团”</p>
               {celebrities.map((celebrity) => (
                 <CelebrityMatchCard key={celebrity.id} celebrity={celebrity} />
               ))}
@@ -350,10 +353,10 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <Link2 className="w-5 h-5 text-hermes-500" />
-                  <h2 className="font-semibold text-base text-slate-800">你可以联系谁</h2>
-                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">Connection</span>
+                  <h2 className="font-semibold text-base text-slate-800">社交链接推荐</h2>
+                  <span className="ml-auto text-xs text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full font-medium">Social Links</span>
                 </div>
-                <p className="text-sm text-slate-400 mb-3">从“高光经历”出发，把求职变成具体的人脉动作</p>
+                <p className="text-sm text-slate-400 mb-3">从“高光经历”出发，推荐你可以联系的人和可以关注的信息源</p>
                 <div className="space-y-3">
                   {connectionTargets.map((item, index) => (
                     <ConnectionTargetCard key={item.title} item={item} index={index} />
@@ -402,7 +405,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 </div>
               </div>
 
-              <XiaohongshuCard title="AI 帮我看懂自己的求职优势" kicker="Card 01 / Talent" index={0}>
+              <XiaohongshuCard title="求职天赋名片" kicker="Card 01 / Talent Card" index={0}>
                 <div className="flex items-center gap-4 mb-5">
                   <div className="w-16 h-16 rounded-2xl bg-cream-100 flex items-center justify-center text-3xl">🧠</div>
                   <div>
@@ -427,7 +430,7 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 </p>
               </XiaohongshuCard>
 
-              <XiaohongshuCard title="我的求职人脉地图" kicker="Card 02 / Connection" index={1}>
+              <XiaohongshuCard title="社交链接推荐" kicker="Card 02 / Social Links" index={1}>
                 <div className="space-y-3">
                   {connectionTargets.map((item, i) => (
                     <div key={item.title} className="relative bg-cream-50 rounded-2xl p-4">
@@ -444,17 +447,18 @@ export default function ReportDashboard({ highMoments, onTalentSelect, onRestart
                 </div>
               </XiaohongshuCard>
 
-              <XiaohongshuCard title="可以直接复制的私信开场白" kicker="Card 03 / Message" index={2}>
-                <div className="bg-cream-50 rounded-2xl p-4 mb-4">
-                  <p className="text-xs font-semibold text-hermes-600 mb-2">发给目标团队 PM / 运营</p>
-                  <p className="text-sm text-slate-600 leading-relaxed">{connectionTargets[1].opener}</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-xs font-semibold text-slate-500">建议关注的信息源</p>
-                  {creatorRecommendations.slice(0, 3).map((item) => (
-                    <div key={item.name} className="flex items-center justify-between gap-3 bg-white rounded-xl px-3 py-2 border border-cream-100">
-                      <span className="text-sm font-medium text-slate-700 truncate">{item.name}</span>
-                      <span className="text-[10px] text-hermes-500 bg-hermes-50 px-2 py-0.5 rounded-full shrink-0">{item.focus.split('、')[0]}</span>
+              <XiaohongshuCard title="名人导师团建议" kicker="Card 03 / Mentor Board" index={2}>
+                <div className="space-y-3">
+                  {celebrities.map((item) => (
+                    <div key={item.id} className="bg-cream-50 rounded-2xl p-4">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="text-2xl">{item.emoji}</span>
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-slate-800">{item.name}</p>
+                          <p className="text-xs text-hermes-600">{item.matchTalent} · {item.matchScore}% 匹配</p>
+                        </div>
+                      </div>
+                      <p className="text-xs text-slate-500 leading-relaxed">{item.quote}</p>
                     </div>
                   ))}
                 </div>
