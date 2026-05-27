@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft, ArrowRight, Sparkles, Check, Edit3, X, Bot, Zap } from 'lucide-react'
 import InsightOrb from './InsightOrb'
@@ -51,7 +51,7 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], 
 
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [step, showConfirm])
+  }, [step, showConfirm, values])
 
   const current = STEPS[step]
   const currentValue = values[step] || ''
@@ -165,6 +165,125 @@ export default function AIChatOnboarding({ onSave, onBack, initialMoments = [], 
 
       {/* 对话区域 */}
       <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-4 space-y-5">
+        {step > 0 && !isReviewStep && STEPS.slice(0, step).map((s, i) => (
+          <Fragment key={`history-${s.key}`}>
+            {i === 0 && (
+              <motion.div
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="shrink-0">
+                  <InsightOrb state="focused" size="sm" />
+                </div>
+                <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                  <p className="text-base text-slate-700">{s.aiGreeting}</p>
+                </div>
+              </motion.div>
+            )}
+
+            <motion.div
+              className="flex items-start gap-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="w-9 h-9 rounded-full bg-hermes-50 flex items-center justify-center shrink-0 border border-hermes-100">
+                <span className="text-base">馃</span>
+              </div>
+              <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                <p className="text-base text-slate-700 leading-relaxed">{s.aiMessage}</p>
+                <p className="text-sm text-slate-400 mt-2">{s.aiHint}</p>
+              </div>
+            </motion.div>
+
+            {values[i]?.trim() && (
+              <motion.div
+                className="flex items-start gap-3 justify-end"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                <div className="bg-hermes-500 text-white rounded-2xl rounded-tr-sm p-4 shadow-sm max-w-[80%]">
+                  <p className="text-base leading-relaxed">{values[i]}</p>
+                </div>
+              </motion.div>
+            )}
+
+            {values[i]?.trim() && (
+              <motion.div
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="shrink-0">
+                  <InsightOrb state="focused" size="sm" />
+                </div>
+                <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                  <p className="text-base text-slate-700">{s.aiConfirm}</p>
+                </div>
+              </motion.div>
+            )}
+          </Fragment>
+        ))}
+
+        {isReviewStep && STEPS.map((s, i) => (
+          <Fragment key={`review-history-${s.key}`}>
+            {i === 0 && (
+              <motion.div
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="shrink-0">
+                  <InsightOrb state="focused" size="sm" />
+                </div>
+                <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                  <p className="text-base text-slate-700">{s.aiGreeting}</p>
+                </div>
+              </motion.div>
+            )}
+
+            <motion.div
+              className="flex items-start gap-3"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="w-9 h-9 rounded-full bg-hermes-50 flex items-center justify-center shrink-0 border border-hermes-100">
+                <span className="text-base">馃</span>
+              </div>
+              <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                <p className="text-base text-slate-700 leading-relaxed">{s.aiMessage}</p>
+                <p className="text-sm text-slate-400 mt-2">{s.aiHint}</p>
+              </div>
+            </motion.div>
+
+            {values[i]?.trim() && (
+              <motion.div
+                className="flex items-start gap-3 justify-end"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+              >
+                <div className="bg-hermes-500 text-white rounded-2xl rounded-tr-sm p-4 shadow-sm max-w-[80%]">
+                  <p className="text-base leading-relaxed">{values[i]}</p>
+                </div>
+              </motion.div>
+            )}
+
+            {values[i]?.trim() && (
+              <motion.div
+                className="flex items-start gap-3"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+              >
+                <div className="shrink-0">
+                  <InsightOrb state="focused" size="sm" />
+                </div>
+                <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm max-w-[85%]">
+                  <p className="text-base text-slate-700">{s.aiConfirm}</p>
+                </div>
+              </motion.div>
+            )}
+          </Fragment>
+        ))}
         {!isReviewStep ? (
           <>
             {step === 0 && (
